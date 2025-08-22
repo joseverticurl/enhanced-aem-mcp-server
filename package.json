@@ -1,0 +1,38 @@
+{
+  "name": "aem-mcp-agent",
+  "version": "1.0.0",
+  "description": "AEM Model Context Protocol (MCP) server with LLM and Telegram integration (TypeScript clone)",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev src/index.ts",
+    "mcp": "node dist/mcp-server.js",
+    "test": "npm run build && node dist/tests/run-tests.js",
+    "test:quick": "npm run build && node dist/tests/run-tests.js -- --quick",
+    "test:verbose": "npm run build && node dist/tests/run-tests.js -- --verbose",
+    "test:report": "npm run build && node dist/tests/run-tests.js -- --output test-report --format html",
+    "test:fragments": "node test-fragments.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.19.0",
+    "@modelcontextprotocol/sdk": "^1.15.0",
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "openai": "^4.30.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  },
+  "type": "module"
+}

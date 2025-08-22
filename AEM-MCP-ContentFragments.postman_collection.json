@@ -1,0 +1,239 @@
+{
+  "info": {
+    "name": "AEM MCP - Content Fragments",
+    "description": "Enhanced AEM MCP Server - Content Fragment Operations (Sling POST Implementation)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "admin",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "admin",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001"
+    },
+    {
+      "key": "aemUrl",
+      "value": "http://localhost:4502"
+    }
+  ],
+  "item": [
+    {
+      "name": "Content Fragment Operations",
+      "item": [
+        {
+          "name": "Create Content Fragment (REST) - Holiday Example",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parentPath\": \"/content/dam/testcfs/mcp-test\",\n  \"title\": \"Holiday 11\",\n  \"description\": \"New year holiday\",\n  \"model\": \"/conf/testcfs/settings/dam/cfm/models/holiday-calendar-model\",\n  \"content\": {\n    \"holidayDescription\": \"New year holiday\",\n    \"holidayDate\": \"Mon Jan 01 2024 00:00:00 GMT+0000\"\n  },\n  \"tags\": [],\n  \"metadata\": {\n    \"category\": \"holidays\",\n    \"year\": \"2024\"\n  },\n  \"locale\": \"en\",\n  \"elementsMode\": \"cf-manager\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/methods/createContentFragment",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "methods", "createContentFragment"]
+            }
+          }
+        },
+        {
+          "name": "Create Content Fragment (JSON-RPC)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"createContentFragment\",\n  \"params\": {\n    \"parentPath\": \"/content/dam/testcfs/mcp-test\",\n    \"title\": \"JSON-RPC Product Fragment 2\",\n    \"description\": \"A test product created via JSON-RPC (CF Manager)\",\n    \"model\": \"/conf/testcfs/settings/dam/cfm/models/holiday-calendar-model\",\n    \"content\": {\n      \"productName\": \"JSON-RPC Widget\",\n      \"price\": \"399.99\"\n    },\n    \"tags\": [],\n    \"metadata\": {\n      \"category\": \"electronics\"\n    },\n    \"elementsMode\": \"cf-manager\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mcp",
+              "host": ["{{baseUrl}}"],
+              "path": ["mcp"]
+            }
+          }
+        },
+        {
+          "name": "Get Content Fragment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fragmentPath\": \"/content/dam/testcfs/mcp-test/holiday-11\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/methods/getContentFragment",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "methods", "getContentFragment"]
+            }
+          }
+        },
+        {
+          "name": "Update Content Fragment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fragmentPath\": \"/content/dam/testcfs/mcp-test/test-product-fragment\",\n  \"content\": {\n    \"productName\": \"Updated Premium Widget\",\n    \"price\": \"349.99\",\n    \"features\": [\"Updated Feature 1\", \"New Feature 2\"]\n  },\n  \"tags\": [\"product\", \"e-commerce\", \"widget\", \"updated\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/methods/updateContentFragment",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "methods", "updateContentFragment"]
+            }
+          }
+        },
+        {
+          "name": "List Content Fragments",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parentPath\": \"/content/dam/testcfs/mcp-test\",\n  \"depth\": 2,\n  \"limit\": 10,\n  \"filter\": \"product\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/methods/listContentFragments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "methods", "listContentFragments"]
+            }
+          }
+        },
+        {
+          "name": "Delete Content Fragment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fragmentPath\": \"/content/dam/testcfs/mcp-test/test-product-fragment\",\n  \"force\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/methods/deleteContentFragment",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "methods", "deleteContentFragment"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Verification via AEM API",
+      "item": [
+        {
+          "name": "Check Fragment in AEM",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{aemUrl}}/content/dam/testcfs/mcp-test/holiday-11.json",
+              "host": ["{{aemUrl}}"],
+              "path": ["content", "dam", "testcfs", "mcp-test", "holiday-11.json"]
+            }
+          }
+        },
+        {
+          "name": "Check Master Node JSON (flat props)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{aemUrl}}/content/dam/testcfs/mcp-test/holiday-11/jcr:content/data/master.json",
+              "host": ["{{aemUrl}}"],
+              "path": [
+                "content",
+                "dam",
+                "testcfs",
+                "mcp-test",
+                "holiday-11",
+                "jcr:content",
+                "data",
+                "master.json"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List DAM Assets",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{aemUrl}}/content/dam/testcfs/mcp-test.json",
+              "host": ["{{aemUrl}}"],
+              "path": ["content", "dam", "testcfs", "mcp-test.json"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Server Status",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            }
+          }
+        },
+        {
+          "name": "List All Methods",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/methods",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "methods"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+} 
